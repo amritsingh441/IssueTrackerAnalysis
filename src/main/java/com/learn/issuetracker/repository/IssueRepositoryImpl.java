@@ -1,8 +1,12 @@
 package com.learn.issuetracker.repository;
 
+import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Collections;
 import java.util.List;
-
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import com.learn.issuetracker.model.Issue;
 
 /*
@@ -28,7 +32,9 @@ public class IssueRepositoryImpl implements IssueRepository {
 	 *
 	 */
 	public IssueRepositoryImpl(Path issuesFilePath) {
-
+		super();
+		this.issuesFilePath = issuesFilePath;
+		initializeIssuesFromFile();
 	}
 
 	/*
@@ -41,7 +47,12 @@ public class IssueRepositoryImpl implements IssueRepository {
 	 */
 
 	public void initializeIssuesFromFile() {
-
+		try(Stream<String> issuesFileData = Files.newBufferedReader(issuesFilePath).lines()){
+			issues = issuesFileData.map(Utility::parseIssue).collect(Collectors.toList());
+			issues = issues.stream().filter(issue -> issue.getIssueId().startsWith("IS")).collect(Collectors.toList());
+		} catch (IOException e) {
+			e.getMessage();		
+		}
 	}
 
 	/*

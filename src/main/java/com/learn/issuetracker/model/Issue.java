@@ -23,9 +23,17 @@ public class Issue {
 	/*
 	 * Complete the parameterized Constructor
 	 */
+	
 	public Issue(String issueId, String summary, LocalDate createdOn, LocalDate expectedResolutionOn, String priority,
 			String status, Employee assignedTo) {
-
+		super();
+		this.issueId = issueId;
+		this.summary = summary;
+		this.createdOn = createdOn;
+		this.expectedResolutionOn = expectedResolutionOn;
+		this.priority = priority;
+		this.status = status;
+		this.assignedTo = assignedTo;
 	}
 
 	public String getIssueId() {
